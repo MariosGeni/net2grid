@@ -1,11 +1,15 @@
 <?php
 
-namespace App\net2grid;
-
-use mysqli;
+namespace App;
 
 class Getter
 {
+
+    /**
+     * @return mixed
+     *
+     * Getting a JSON object from a url and converting it from hexadecimal to decimal
+     */
     public function getMessage()
     {
         $url = "https://a831bqiv1d.execute-api.eu-west-1.amazonaws.com/dev/results";
@@ -40,6 +44,12 @@ class Getter
         return $decoded_data;
     }
 
+    /**
+     * @param $hex
+     * @return int|string
+     *
+     *The conversion from hexadecimal to decimal
+     */
     public function hex_to_dec($hex): int|string
     {
         $dec = 0;
