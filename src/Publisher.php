@@ -15,7 +15,8 @@ class Publisher
      *
      * This method gets a message from a given url and edits it, so it can be published to the RabbitMQ
      */
-    function publish_message($rabbitMQConnection, $rabbitMQQueue, $rabbitMQExchange){
+    function publish_message($rabbitMQConnection, $rabbitMQQueue, $rabbitMQExchange)
+    {
         $getter = new Getter();
 
         $messageToCut = $getter->getMessage();

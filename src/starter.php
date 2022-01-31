@@ -17,7 +17,7 @@ $rabbitMQConnection = $connectors->connectToRabbitMQ();
 $databaseConnection = $connectors->connectToDatabase();
 
 $publisher->publish_message($rabbitMQConnection, $rabbitMQQueue, $rabbitMQExchange);
-$consumer->consumingData($rabbitMQConnection, $rabbitMQQueue, $rabbitMQExchange);
+$consumer->consumingData($rabbitMQConnection, $rabbitMQQueue, $rabbitMQExchange, $databaseConnection);
 
 $connectors->closeConnections($rabbitMQConnection, $databaseConnection);
 

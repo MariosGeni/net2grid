@@ -12,7 +12,8 @@ class Connectors
      * @return mysqli|void
      * Making a connection with the database
      */
-    public function connectToDatabase(){
+    public function connectToDatabase()
+    {
         $databaseServername = "candidaterds.n2g-dev.net";
         $databaseUsername = "cand_x07w";
         $databasePassword = "jsmDH9ZfThk6SWpE";
@@ -32,13 +33,13 @@ class Connectors
      */
     public function connectToRabbitMQ(): AMQPStreamConnection
     {
-        $rabbitMQHost = 'candidatemq.n2g-dev.net';
+        $rabbitMQHost = 'roedeer.rmq.cloudamqp.com';
         $rabbitMQPort = 5672;
-        $rabbitMQuser = 'cand_x07w';
-        $rabbitMQPass = 'jsmDH9ZfThk6SWpE';
-        $rabbitMQVHost = "";
+        $rabbitMQUser = 'ykarradj';
+        $rabbitMQPass = '0FsDc6lUWTrB2qaFQaITdbyBxLcugaHC';
+        $rabbitMQVHost = 'ykarradj';
 
-        return new AMQPStreamConnection($rabbitMQHost, $rabbitMQPort, $rabbitMQuser, $rabbitMQPass, $rabbitMQVHost);
+        return new AMQPStreamConnection($rabbitMQHost, $rabbitMQPort, $rabbitMQUser, $rabbitMQPass, $rabbitMQVHost);
     }
 
     /**
@@ -48,7 +49,8 @@ class Connectors
      *
      * Closing the connections of database and RabbitMQ
      */
-    function closeConnections($rabbitMQConnection, $databaseConnection){
+    function closeConnections($rabbitMQConnection, $databaseConnection)
+    {
         $rabbitMQConnection->close();
         $databaseConnection->close();
     }

@@ -19,19 +19,19 @@ class Getter
 
         foreach ($decoded_data as $key => $value) {
 
-            if ($key == "gatewayEui"){
+            if ($key == "gatewayEui") {
                 $decoded_data->gatewayEui = $this->hex_to_dec($value);
             }
-            if ($key == "profileId"){
+            if ($key == "profileId") {
                 $decoded_data->profileId = $this->hex_to_dec($value);
             }
-            if ($key == "endpointId"){
+            if ($key == "endpointId") {
                 $decoded_data->endpointId = $this->hex_to_dec($value);
             }
-            if ($key == "clusterId"){
+            if ($key == "clusterId") {
                 $decoded_data->clusterId = $this->hex_to_dec($value);
             }
-            if ($key == "attributeId"){
+            if ($key == "attributeId") {
                 $decoded_data->attributeId = $this->hex_to_dec($value);
             }
             if ($key == "timestamp") {

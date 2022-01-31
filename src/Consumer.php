@@ -16,23 +16,21 @@ class Consumer
      *
      * Consuming a data from RabbitMQ
      */
-    public function consumingData($rabbitMQConnection,$rabbitMQQueue, $rabbitMQExchange){
+    public function consumingData($rabbitMQConnection, $rabbitMQQueue, $rabbitMQExchange, $databaseConnection)
+    {
         $channel = $rabbitMQConnection->channel();
 
         $channel->queue_declare($rabbitMQQueue, false, true, false, false);
         $channel->exchange_declare($rabbitMQExchange, 'direct', false, true, false);
         $channel->queue_bind($rabbitMQQueue, $rabbitMQExchange);
 
-        $channel->basic_consume($rabbitMQQueue, '', false, false, false, false, 'processMessage');
-
         /**
          * @param AMQPMessage $message
          * @return void
          *
-         * Processing the message, so it can be sent to the database
+         * This is an internal method that take the message and passing to the sender class
          */
-        function processMessage(AMQPMessage $message)
-        {
+        $callback = function (AMQPMessage $message) use ($databaseConnection) {
 
             $sender = new Message();
 
@@ -41,8 +39,18 @@ class Consumer
             $message->delivery_info['channel']->basic_ack($message->delivery_info['delivery_tag']);
             $routingKey = $message->delivery_info['routing_key'];
 
-            $sender->insertIntoDatabase($routingKey);
-        }
+            $sender->insertIntoDatabase($databaseConnection, $routingKey);
+        };
+
+        $channel->basic_consume($rabbitMQQueue, '', false, false, false, false, $callback);
+
+        /**
+         * @param AMQPMessage $message
+         * @return void
+         *
+         * Processing the message, so it can be sent to the database
+         */
+
 
         try {
             while (count($channel->callbacks)) {
@@ -54,6 +62,4 @@ class Consumer
         }
         $channel->close();
     }
-
-
 }
