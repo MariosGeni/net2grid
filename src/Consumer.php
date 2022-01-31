@@ -34,8 +34,6 @@ class Consumer
 
             $sender = new Message();
 
-            $messageBody = json_decode($message->body);
-
             $message->delivery_info['channel']->basic_ack($message->delivery_info['delivery_tag']);
             $routingKey = $message->delivery_info['routing_key'];
 
@@ -58,7 +56,7 @@ class Consumer
                 $channel->wait(null, true, 3);
             }
         } catch (Exception $e) {
-            echo "An error occurred while processing your request";
+            echo "There are no other messages to be consumed or the was been an error during the consumption";
         }
         $channel->close();
     }
