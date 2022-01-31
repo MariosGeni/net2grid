@@ -6,18 +6,20 @@ use App\Consumer;
 
 require dirname(__DIR__) . '/vendor/autoload.php';
 
-$rabbitMQQueue = 'cand_x07w_results';
-$rabbitMQExchange = 'cand_x07w';
+    $rabbitMQQueue = 'cand_x07w_results';
+    $rabbitMQExchange = 'cand_x07w';
 
-$connectors = new Connectors();
-$publisher = new Publisher();
-$consumer = new Consumer();
+    $connectors = new Connectors();
+    $publisher = new Publisher();
+    $consumer = new Consumer();
 
-$rabbitMQConnection = $connectors->connectToRabbitMQ();
-$databaseConnection = $connectors->connectToDatabase();
+    $rabbitMQConnection = $connectors->connectToRabbitMQ();
+    $databaseConnection = $connectors->connectToDatabase();
 
-$publisher->publish_message($rabbitMQConnection, $rabbitMQQueue, $rabbitMQExchange);
-$consumer->consumingData($rabbitMQConnection, $rabbitMQQueue, $rabbitMQExchange, $databaseConnection);
+    for ($x = 0 ; $x <= 10 ; $x++) {
+        $publisher->publish_message($rabbitMQConnection, $rabbitMQQueue, $rabbitMQExchange);
+    }
+    $consumer->consumingData($rabbitMQConnection, $rabbitMQQueue, $rabbitMQExchange, $databaseConnection);
 
-$connectors->closeConnections($rabbitMQConnection, $databaseConnection);
+    $connectors->closeConnections($rabbitMQConnection, $databaseConnection);
 
